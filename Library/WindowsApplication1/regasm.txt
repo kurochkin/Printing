@@ -1,0 +1,5 @@
+регистрация
+	regasm SerialPortDataProcessor.dll /codebase
+	
+отмена регистрации 
+	regasm SerialPortDataProcessor.dll /u

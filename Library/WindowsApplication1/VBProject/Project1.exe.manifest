@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+       <assemblyIdentity
+                    name="SerialPortDataProcessor"
+                    version="1.0.0.0" 
+                    publicKeyToken="null"
+					/>
+       <clrClass
+                    clsid="{BA66896F-B746-4F87-B45E-AAD7CF11C6B9}"
+                    progid="SerialPortDataProcessor.ComPortDataProcessor"
+                    threadingModel="Both"
+                    name="SerialPortDataProcessor.ComPortDataProcessor"
+                    runtimeVersion="v2.0.50727">
+       </clrClass>       
+       <file name="SerialPortDataProcessor.dll">
+       </file>
+</assembly>

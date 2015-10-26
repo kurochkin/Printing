@@ -20,6 +20,7 @@ namespace SerialPortDataProcessor
     [ComVisible(true)]
     [Guid("068CC3EF-18E9-473B-B711-094790B1CE27")]
     [ProgId("SerialPortDataProcessor.PrintLabelProcessor")]
+    [ClassInterface(ClassInterfaceType.AutoDual)] 
     public class PrintLabelProcessor
     {
         private string _connectionString;
@@ -47,6 +48,22 @@ namespace SerialPortDataProcessor
             }
         }
 
+        public void PrintLabelV2(int id)
+        {
+
+            _id = id;
+            //_frontBitmaps = ProcessLabel("usp_PrintLabelFront", false, 220, 365);
+            _backBitmaps = ProcessLabel("usp_PrintLabelV2", true, 220, 365);
+
+            int pagesCount = _backBitmaps.Count;
+            int currentPage = 0;
+
+            foreach (var bitmap in _backBitmaps)
+            {
+                currentPage++;
+                PrintImage(bitmap, false, pagesCount > 1 ? String.Format("{0} \\ {1}", currentPage, pagesCount) : String.Empty);
+            }
+        }
 
         private List<Bitmap> _frontBitmaps;
         private List<Bitmap> _backBitmaps;
@@ -75,7 +92,7 @@ namespace SerialPortDataProcessor
         {
             List<LabelItem> labelItems = new List<LabelItem>();
 
-            int currentPange = 1;
+            int currentPage = 1;
 
             List<Bitmap> bmpLst = new List<Bitmap>();
             bmpLst.Add(new Bitmap(width, height));
@@ -98,13 +115,13 @@ namespace SerialPortDataProcessor
 
             foreach (var labelItem in labelItems)
             {
-                if (currentPange != labelItem.PageNum)
+                if (currentPage != labelItem.PageNum)
                 {
                     bmpLst.Add(new Bitmap(width, height));
-                    currentPange++;
+                    currentPage++;
                 }
 
-                using (var g = Graphics.FromImage(bmpLst[currentPange - 1]))
+                using (var g = Graphics.FromImage(bmpLst[currentPage - 1]))
                 {
                     if (mirrorTransfom)
                     {

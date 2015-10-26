@@ -50,7 +50,6 @@ namespace SerialPortDataProcessor
 
         public void PrintLabelV2(int id)
         {
-
             _id = id;
             //_frontBitmaps = ProcessLabel("usp_PrintLabelFront", false, 220, 365);
             _backBitmaps = ProcessLabel("usp_PrintLabelV2", true, 220, 365);

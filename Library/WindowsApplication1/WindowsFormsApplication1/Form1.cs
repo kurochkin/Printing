@@ -14,6 +14,7 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         private SerialPortDataProcessor.ComPortDataProcessor _portDataProcessor;
+        private SerialPortDataProcessor.PrintLabelProcessor _printLabelProcessor = new PrintLabelProcessor();
 
         public Form1()
         {
@@ -39,6 +40,12 @@ namespace WindowsFormsApplication1
         private void button3_Click(object sender, EventArgs e)
         {
             MessageBox.Show(_portDataProcessor.ReadedData());
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            _printLabelProcessor.Init();
+            _printLabelProcessor.PrintLabelV2(100);
         }
     }
 }

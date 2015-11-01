@@ -22,6 +22,8 @@ namespace WindowsFormsApplication1
 
         private List<Bitmap> _frontBitmaps;
         private List<Bitmap> _backBitmaps;
+        private List<Bitmap> _v2Bitmaps;
+
         //private Bitmap _commonBitmap;
 
 
@@ -186,7 +188,7 @@ namespace WindowsFormsApplication1
                 pd.PrinterSettings.PrinterName = "Microsoft XPS Document Writer";
                 pd.OriginAtMargins = true;
                 pd.DefaultPageSettings.Margins = new Margins(settings.MarginLeft, 0, settings.MarginTop, 0);
-                
+
                 //pd.OriginAtMargins = false;
                 pd.PrintPage += pd_PrintPage;
                 pd.DefaultPageSettings.Landscape = false;
@@ -264,6 +266,27 @@ namespace WindowsFormsApplication1
                 PrintImage(_frontBitmaps[0], false, pagesCount > 1 ? String.Format("{0}\\{1}", currentPage, pagesCount) : String.Empty);
             }
 
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _v2Bitmaps = ProcessLabel("usp_PrintLabelV2", false, 220, 365);
+                pictureBox3.Image = _v2Bitmaps[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (_v2Bitmaps == null || _v2Bitmaps.Count == 0)
+                button6_Click(sender, e);
+
+            PrintImage(_v2Bitmaps[0]);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace SerialPortDataProcessor
     [ComVisible(true)]
     [Guid("068CC3EF-18E9-473B-B711-094790B1CE27")]
     [ProgId("SerialPortDataProcessor.PrintLabelProcessor")]
-    [ClassInterface(ClassInterfaceType.AutoDual)] 
+    [ClassInterface(ClassInterfaceType.AutoDual)]
     public class PrintLabelProcessor
     {
         private string _connectionString;
@@ -51,21 +51,17 @@ namespace SerialPortDataProcessor
         public void PrintLabelV2(int id)
         {
             _id = id;
-            //_frontBitmaps = ProcessLabel("usp_PrintLabelFront", false, 220, 365);
-            _backBitmaps = ProcessLabel("usp_PrintLabelV2", true, 220, 365);
+            _v2Bitmaps = ProcessLabel("usp_PrintLabelV2", false, 220, 365);
 
-            int pagesCount = _backBitmaps.Count;
-            int currentPage = 0;
+            if (_v2Bitmaps.Count == 0) return;
 
-            foreach (var bitmap in _backBitmaps)
-            {
-                currentPage++;
-                PrintImage(bitmap, false, pagesCount > 1 ? String.Format("{0} \\ {1}", currentPage, pagesCount) : String.Empty);
-            }
+            foreach (var bitmap in _v2Bitmaps)
+                PrintImage(bitmap, false, null);
         }
 
         private List<Bitmap> _frontBitmaps;
         private List<Bitmap> _backBitmaps;
+        private List<Bitmap> _v2Bitmaps;
 
 
 
@@ -175,7 +171,7 @@ namespace SerialPortDataProcessor
                     break;
             }
         }
-        
+
         //private void PrintImage(Image img)
         //{
         //    PrintImage(img, true);

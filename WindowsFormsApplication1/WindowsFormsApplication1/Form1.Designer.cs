@@ -43,6 +43,8 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
+            this.cmbRenedringModes = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -189,11 +191,30 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // cmbRenedringModes
+            // 
+            this.cmbRenedringModes.FormattingEnabled = true;
+            this.cmbRenedringModes.Location = new System.Drawing.Point(546, 37);
+            this.cmbRenedringModes.Name = "cmbRenedringModes";
+            this.cmbRenedringModes.Size = new System.Drawing.Size(198, 21);
+            this.cmbRenedringModes.TabIndex = 9;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(543, 15);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(110, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Text Renedring Mode";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(894, 562);
+            this.ClientSize = new System.Drawing.Size(795, 562);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cmbRenedringModes);
             this.Controls.Add(this.chkPreview);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.txtId);
@@ -211,6 +232,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
             this.Text = "Тест печати бирок";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -236,6 +258,8 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.ComboBox cmbRenedringModes;
+        private System.Windows.Forms.Label label3;
     }
 }
 

@@ -87,10 +87,10 @@ namespace WindowsFormsApplication1
                     }
 
                     g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    //g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                    g.TextRenderingHint = (TextRenderingHint)cmbRenedringModes.SelectedItem;
+                    g.InterpolationMode = InterpolationMode.Bilinear;
                     g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
 
                     ProcessLabelItem(labelItem, g, settings);
                 }
@@ -230,7 +230,7 @@ namespace WindowsFormsApplication1
         {
             e.Graphics.PageUnit = GraphicsUnit.Pixel;
             //e.Graphics.CompositingMode = CompositingMode.SourceCopy;
-            //e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
+            e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
 
 
             //e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
@@ -287,6 +287,18 @@ namespace WindowsFormsApplication1
                 button6_Click(sender, e);
 
             PrintImage(_v2Bitmaps[0]);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+                    //g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+
+            var items = Enum.GetValues(typeof (TextRenderingHint));
+            foreach (TextRenderingHint textRenderingHint in items)
+            {
+                cmbRenedringModes.Items.Add(textRenderingHint);
+            }
+            cmbRenedringModes.SelectedItem = TextRenderingHint.SingleBitPerPixelGridFit;
         }
     }
 }

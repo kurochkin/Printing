@@ -185,10 +185,12 @@ namespace WindowsFormsApplication1
                     DrawPageInfo(pageInfo, settings);
 
                 PrintDocument pd = new PrintDocument();
-                pd.PrinterSettings.PrinterName = "Microsoft XPS Document Writer";
+                pd.PrinterSettings.PrinterName = "HP LaserJet 1018";
+                //pd.PrinterSettings.PrinterName = "Microsoft XPS Document Writer";
                 pd.OriginAtMargins = true;
                 pd.DefaultPageSettings.Margins = new Margins(settings.MarginLeft, 0, settings.MarginTop, 0);
-
+                pd.DefaultPageSettings.PrinterResolution.X = 1200;
+                pd.DefaultPageSettings.PrinterResolution.Y = 1200;
                 //pd.OriginAtMargins = false;
                 pd.PrintPage += pd_PrintPage;
                 pd.DefaultPageSettings.Landscape = false;
@@ -231,8 +233,7 @@ namespace WindowsFormsApplication1
             e.Graphics.PageUnit = GraphicsUnit.Pixel;
             //e.Graphics.CompositingMode = CompositingMode.SourceCopy;
             e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
-
-
+            
             //e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.TextRenderingHint = TextRenderingHint.SystemDefault;
             //e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -283,17 +284,15 @@ namespace WindowsFormsApplication1
 
         private void button7_Click(object sender, EventArgs e)
         {
-            if (_v2Bitmaps == null || _v2Bitmaps.Count == 0)
-                button6_Click(sender, e);
-
+            button6_Click(sender, e);
             PrintImage(_v2Bitmaps[0]);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-                    //g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+            //g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
 
-            var items = Enum.GetValues(typeof (TextRenderingHint));
+            var items = Enum.GetValues(typeof(TextRenderingHint));
             foreach (TextRenderingHint textRenderingHint in items)
             {
                 cmbRenedringModes.Items.Add(textRenderingHint);

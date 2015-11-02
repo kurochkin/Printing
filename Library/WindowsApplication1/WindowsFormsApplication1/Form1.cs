@@ -44,7 +44,7 @@ namespace WindowsFormsApplication1
 
         private void button4_Click(object sender, EventArgs e)
         {
-            _printLabelProcessor.Init();
+            _printLabelProcessor.Init(TextRenderingType.SystemDefault);
             _printLabelProcessor.PrintLabelV2(100);
         }
     }

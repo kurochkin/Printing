@@ -17,6 +17,46 @@ using ZXing;
 
 namespace SerialPortDataProcessor
 {
+
+    // Summary:
+    //     Specifies the quality of text rendering.
+    
+    [ComVisible(true)]
+    [Guid("2FAF5929-E359-45D9-AD21-D1CC823FB2D7")]
+    public enum TextRenderingType
+    {
+        // Summary:
+        //     Each character is drawn using its glyph bitmap, with the system default rendering
+        //     hint. The text will be drawn using whatever font-smoothing settings the user
+        //     has selected for the system.
+        SystemDefault = 0,
+        //
+        // Summary:
+        //     Each character is drawn using its glyph bitmap. Hinting is used to improve
+        //     character appearance on stems and curvature.
+        SingleBitPerPixelGridFit = 1,
+        //
+        // Summary:
+        //     Each character is drawn using its glyph bitmap. Hinting is not used.
+        SingleBitPerPixel = 2,
+        //
+        // Summary:
+        //     Each character is drawn using its antialiased glyph bitmap with hinting.
+        //     Much better quality due to antialiasing, but at a higher performance cost.
+        AntiAliasGridFit = 3,
+        //
+        // Summary:
+        //     Each character is drawn using its antialiased glyph bitmap without hinting.
+        //     Better quality due to antialiasing. Stem width differences may be noticeable
+        //     because hinting is turned off.
+        AntiAlias = 4,
+        //
+        // Summary:
+        //     Each character is drawn using its glyph ClearType bitmap with hinting. The
+        //     highest quality setting. Used to take advantage of ClearType font features.
+        ClearTypeGridFit = 5,
+    }
+
     [ComVisible(true)]
     [Guid("068CC3EF-18E9-473B-B711-094790B1CE27")]
     [ProgId("SerialPortDataProcessor.PrintLabelProcessor")]
@@ -24,9 +64,11 @@ namespace SerialPortDataProcessor
     public class PrintLabelProcessor
     {
         private string _connectionString;
+        private TextRenderingType _textRenderingType;
         private int _id;
-        public void Init()
+        public void Init(TextRenderingType textRenderingType)
         {
+            _textRenderingType = textRenderingType;
             _connectionString = Configuration.GetConnectionString();
         }
 
@@ -125,7 +167,9 @@ namespace SerialPortDataProcessor
                     }
 
                     //g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.TextRenderingHint = TextRenderingHint.SystemDefault;
+                    TextRenderingHint textRenderingHint = (TextRenderingHint) (int) _textRenderingType;
+                    g.TextRenderingHint = textRenderingHint;
+                    //g.TextRenderingHint = TextRenderingHint.SystemDefault;
                     //g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     //g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 

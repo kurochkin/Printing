@@ -66,7 +66,8 @@ End Sub
 Private Sub Form_Load()
    'Set portListener = CreateObject("SerialPortDataProcessor.PrintLabelProcessor")
    Dim portListener As New PrintLabelProcessor
-   portListener.Init
+   portListener.Init TextRenderingType_AntiAliasGridFit
+   
    'portListener.PrintLabel 100
    portListener.PrintLabelV2 100
 End Sub

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Printing;
@@ -185,14 +186,16 @@ namespace WindowsFormsApplication1
                     DrawPageInfo(pageInfo, settings);
 
                 PrintDocument pd = new PrintDocument();
-                pd.PrinterSettings.PrinterName = "HP LaserJet 1018";
+                //pd.PrinterSettings.PrinterName = "HP LaserJet 1018";
                 //pd.PrinterSettings.PrinterName = "Microsoft XPS Document Writer";
                 pd.OriginAtMargins = true;
                 pd.DefaultPageSettings.Margins = new Margins(settings.MarginLeft, 0, settings.MarginTop, 0);
-                pd.DefaultPageSettings.PrinterResolution.X = 1200;
-                pd.DefaultPageSettings.PrinterResolution.Y = 1200;
+                //pd.DefaultPageSettings.PrinterResolution.X = 1200;
+                //pd.DefaultPageSettings.PrinterResolution.Y = 1200;
                 //pd.OriginAtMargins = false;
                 pd.PrintPage += pd_PrintPage;
+
+
                 pd.DefaultPageSettings.Landscape = false;
                 //pd.Print();
                 if (showPreview)
@@ -214,6 +217,7 @@ namespace WindowsFormsApplication1
             }
         }
 
+
         private void DrawPageInfo(string pageInfo, PrintLabelSettings settings)
         {
             using (var g = Graphics.FromImage(bmIm))
@@ -230,6 +234,12 @@ namespace WindowsFormsApplication1
 
         void pd_PrintPage(object sender, PrintPageEventArgs e)
         {
+
+            foreach (PrinterResolution printerResolution in e.PageSettings.PrinterSettings.PrinterResolutions)
+            {
+                Debug.WriteLine(String.Format("{0} {1}*{2}",printerResolution.Kind, printerResolution.X, printerResolution.Y));
+            }
+
             e.Graphics.PageUnit = GraphicsUnit.Pixel;
             //e.Graphics.CompositingMode = CompositingMode.SourceCopy;
             e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
@@ -244,11 +254,13 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
+            button1_Click(sender, e);
             PrintImage(_frontBitmaps[0]);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
+            button3_Click(sender, e);
             PrintImage(_backBitmaps[0]);
         }
 

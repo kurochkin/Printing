@@ -104,7 +104,7 @@ namespace WindowsFormsApplication1
             {
                 case LabelTypesEnum.Label:
                     g.DrawString(labelItem.LabelText,
-                        new Font("Arial", labelItem.FontSize, labelItem.IsBold ? FontStyle.Bold : FontStyle.Regular),
+                        new Font(labelItem.FontName ?? "Arial", labelItem.FontSize, (labelItem.IsBold ? FontStyle.Bold : FontStyle.Regular) | (labelItem.IsItalic ? FontStyle.Italic : FontStyle.Regular)),
                         Brushes.Black, labelItem.StartX, labelItem.StartY);
                     break;
                 case LabelTypesEnum.BarCode:
@@ -128,7 +128,7 @@ namespace WindowsFormsApplication1
                     var pen = new Pen(Color.Black, 2);
                     g.DrawEllipse(pen, labelItem.StartX, labelItem.StartY, settings.StampDiameter, settings.StampDiameter);
                     g.DrawString(labelItem.LabelText,
-                        new Font("Arial", labelItem.FontSize, labelItem.IsBold ? FontStyle.Bold : FontStyle.Regular),
+                        new Font(labelItem.FontName ?? "Arial", labelItem.FontSize, (labelItem.IsBold ? FontStyle.Bold : FontStyle.Regular) | (labelItem.IsItalic ? FontStyle.Italic : FontStyle.Regular)),
                         Brushes.Black, labelItem.StartX + 2, labelItem.StartY + 11);
                     break;
             }
@@ -233,7 +233,7 @@ namespace WindowsFormsApplication1
             e.Graphics.PageUnit = GraphicsUnit.Pixel;
             //e.Graphics.CompositingMode = CompositingMode.SourceCopy;
             e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
-            
+
             //e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.TextRenderingHint = TextRenderingHint.SystemDefault;
             //e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;

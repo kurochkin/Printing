@@ -65,9 +65,16 @@ namespace SerialPortDataProcessor
     {
         private string _connectionString;
         private TextRenderingType _textRenderingType;
+
+        private int _wRes;
+        private int _hRes;
+
         private int _id;
-        public void Init(TextRenderingType textRenderingType)
+        public void Init(TextRenderingType textRenderingType, [Optional] int wRes, [Optional]  int hRes)
         {
+            _wRes = wRes;
+            _hRes = hRes;
+
             _textRenderingType = textRenderingType;
             _connectionString = Configuration.GetConnectionString();
         }
@@ -166,12 +173,11 @@ namespace SerialPortDataProcessor
                         g.ScaleTransform(-1, -1);
                     }
 
-                    //g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.SmoothingMode = SmoothingMode.HighQuality;
                     TextRenderingHint textRenderingHint = (TextRenderingHint) (int) _textRenderingType;
                     g.TextRenderingHint = textRenderingHint;
-                    //g.TextRenderingHint = TextRenderingHint.SystemDefault;
-                    //g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    //g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    g.InterpolationMode = InterpolationMode.Bilinear;
+                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
 
                     ProcessLabelItem(labelItem, g, settings);
@@ -280,6 +286,32 @@ namespace SerialPortDataProcessor
 
         void pd_PrintPage(object sender, PrintPageEventArgs e)
         {
+            PrinterResolution printerResolution = null;
+
+            if (_wRes != 0 && _hRes != 0)
+            {
+                foreach (PrinterResolution pr in e.PageSettings.PrinterSettings.PrinterResolutions)
+                {
+                    if (pr.X == _wRes && pr.Y == _hRes)
+                    {
+                        printerResolution = pr;
+                        break;
+                    }
+                }
+
+                if (printerResolution != null)
+                    e.PageSettings.PrinterResolution = printerResolution;
+            }
+
+
+            //e.Graphics.CompositingMode = CompositingMode.SourceCopy;
+            e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
+
+            //e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+            e.Graphics.TextRenderingHint = TextRenderingHint.SystemDefault;
+            //e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            //e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
             e.Graphics.PageUnit = GraphicsUnit.Pixel;
             e.Graphics.DrawImage(bmIm, 0, 0, bmIm.Width, bmIm.Height);
         }
